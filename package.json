@@ -9,7 +9,7 @@
     "build:release": "asc src/index.ts --target release",
     "build": "npm run build:debug && npm run build:release",
     "start": "npx serve .",
-    "test": "vitest --run --globals",
+    "test": "vitest --run --globals --reporter verbose",
     "prestart": "npm run build:debug",
     "pretest": "npm run build:debug"
   },
