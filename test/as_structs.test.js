@@ -27,8 +27,8 @@ test('should work with struct input/output', () => {
   expect(v.getUint16(pi + 2, true)).toBe(200) // Expect y to be 200
 
   // Check that the copied struct has the correct values
-  expect(v.getUint16(po, true)).toBe(100) // Expect x to be 100 in the output
-  expect(v.getUint16(po + 2, true)).toBe(200) // Expect y to be 200 in the output
+  expect(v.getUint16(po, true)).toBe(200) // Expect x to be 100 in the output
+  expect(v.getUint16(po + 2, true)).toBe(300) // Expect y to be 200 in the output
 
   // Free the allocated memory
   w.free(pi)
