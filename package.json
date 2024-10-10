@@ -4,20 +4,22 @@
   "description": "An example of passing C-structs to and from srcscript",
   "main": "index.js",
   "scripts": {
-    "test": "node tests",
+    "test": "vitest --run --globals --reporter verbose",
     "build:debug": "asc src/index.ts --target debug",
     "build:release": "asc src/index.ts --target release",
     "build": "npm run build:debug && npm run build:release",
-    "start": "npx serve .",
-    "test": "vitest --run --globals --reporter verbose",
+    "build:site": "vite build",
+    "start": "vite",
+    "pretest": "npm run build:debug",
     "prestart": "npm run build:debug",
-    "pretest": "npm run build:debug"
+    "prebuild:site": "npm run build:debug"
   },
   "keywords": [],
   "author": "David Konsumer <konsumer@jetboystudio.com> (https://konsumer.js.org/)",
   "license": "MIT",
   "devDependencies": {
     "assemblyscript": "^0.27.30",
+    "vite": "^5.4.8",
     "vitest": "^2.1.2"
   },
   "type": "module",

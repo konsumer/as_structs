@@ -1,10 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script type="module">
-import { add } from "./build/release.js";
-document.body.innerText = add(1, 2);
-</script>
+<title>Assemblyscript Structs</title>
+<style>
+  body {
+    font-family: sans-serif;
+    padding: 20px;
+  }
+</style>
 </head>
-<body></body>
+<body>
+  <p>This is a very simple test of passing C-structs to/from assemblyscript. You can read more <a href="https://github.com/konsumer/as_structs">here</a></p>
+  <ul id="ul"></ul>
+</body>
+<script type="module">
+
+const ul = document.getElementById('ul')
+
+import * as w from "./build/debug.js"
+ul.innerHTML = `<li>Basic add: 1+2=${w.add(1, 2)}</li>`
+
+
+// View for WebAssembly memory, can be shared across the host
+const v = new DataView(w.memory.buffer)
+
+// Setup param (allocate 4 bytes for the Vector struct)
+const pi = w.malloc(4)
+
+// Set the values for x and y at the correct byte offsets (pi and pi + 2)
+v.setUint16(pi, 100, true) // Set x = 100 at pi (little-endian)
+v.setUint16(pi + 2, 200, true) // Set y = 200 at pi + 2 (little-endian)
+
+// Call the test function
+const po = w.test(pi) // Get the pointer to the copied struct
+
+ul.innerHTML += `<li>Input: Vector(${v.getUint16(pi, true)}x${v.getUint16(pi + 2, true)})</li>`
+ul.innerHTML += `<li>Output (add 100): Vector(${v.getUint16(po, true)}x${v.getUint16(po + 2, true)})</li>`
+
+// Free the allocated memory
+w.free(pi)
+w.free(po)
+
+</script>
 </html>
