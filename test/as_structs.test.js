@@ -13,7 +13,7 @@ test('should work with struct input/output', () => {
   const v = new DataView(w.memory.buffer)
 
   // Setup param (allocate 4 bytes for the Vector struct)
-  const pi = w.allocate(4)
+  const pi = w.malloc(4)
 
   // Set the values for x and y at the correct byte offsets (pi and pi + 2)
   v.setUint16(pi, 100, true) // Set x = 100 at pi (little-endian)

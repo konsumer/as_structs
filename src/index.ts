@@ -15,11 +15,15 @@ export function add(a: i32, b: i32): i32 {
 }
 
 // expose memory-management
-export function allocate(size: usize, id: u32 = 0): usize {
+export function malloc(size: usize, id: u32 = 0): usize {
    const pout = __new(size, id)
   __pin(pout)
   return pout
 }
+
+// there might be a better way to do alloca, but currently it's just a copy of malloc
+export const alloca=malloc
+
 export function free(pointer:usize): void {
   __unpin(pointer)
 }
@@ -31,7 +35,7 @@ export function test(pin: usize): usize {
   const vector = new Vector(x, y);
 
   // copy to a new struct
-  const pout = allocate(Vector._size)
+  const pout = malloc(Vector._size)
   store<u16>(pout, x);
   store<u16>(pout + 2, y);
 
