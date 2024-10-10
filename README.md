@@ -17,6 +17,10 @@ I pass it to an assemblyscript function (`test`) that will add `100` to `x`/`y` 
 
 I expose `malloc`, `alloca`, and `free` from wasm, so it works the same in any wasm-language. Wasm-languages that do not have a way to manage their own memory will need some sort of adapter (maybe expose host functions?)
 
+In null0, the return-pointer of functions is always first param, if it returns a struct, so no memory-management needs to be exposed to host. These functions might still be useful wasm-side, to allocate return-values, though.
+
+### examples
+
 in assemblyscript-made wasm, that looks like this:
 
 ```ts
@@ -73,4 +77,3 @@ pub unsafe extern "C" fn free(ptr: *mut u8, size: u32, alignment: u32) {
   alloc::alloc::dealloc(ptr, layout);
 }
 ```
-
