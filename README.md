@@ -34,7 +34,9 @@ export function free(pointer:usize): void {
 }
 ```
 
-In wasm made with C, it would look like this:```c
+In wasm made with C, it would look like this:
+
+```c
 #define NULL0_EXPORT(n) __attribute__((export_name(n)))
 
 NULL0_EXPORT("malloc")
