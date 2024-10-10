@@ -12,3 +12,5 @@ typedef struct {
 ```
 
 I pass it to an assemblyscript function (`test`) that will add `100` to `x`/`y` and return it. Pointers (to wasm-memory) are used for all.
+
+I expose `malloc`, `alloca`, and `free` from wasm, so it all works the same as the C null0-carts.
