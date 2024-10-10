@@ -14,12 +14,11 @@
   <ul id="ul"></ul>
 </body>
 <script type="module">
+import * as w from "./build/debug.js"
 
 const ul = document.getElementById('ul')
 
-import * as w from "./build/debug.js"
-ul.innerHTML = `<li>Basic add: 1+2=${w.add(1, 2)}</li>`
-
+const out = [`Basic add: 1+2=${w.add(1, 2)}`]
 
 // View for WebAssembly memory, can be shared across the host
 const v = new DataView(w.memory.buffer)
@@ -34,12 +33,19 @@ v.setUint16(pi + 2, 200, true) // Set y = 200 at pi + 2 (little-endian)
 // Call the test function
 const po = w.test(pi) // Get the pointer to the copied struct
 
-ul.innerHTML += `<li>Input: Vector(${v.getUint16(pi, true)}x${v.getUint16(pi + 2, true)})</li>`
-ul.innerHTML += `<li>Output (add 100): Vector(${v.getUint16(po, true)}x${v.getUint16(po + 2, true)})</li>`
+out.push(`Input: Vector(${v.getUint16(pi, true)}x${v.getUint16(pi + 2, true)})`)
+out.push(`Output (add 100): Vector(${v.getUint16(po, true)}x${v.getUint16(po + 2, true)})`)
 
 // Free the allocated memory
 w.free(pi)
 w.free(po)
+
+// output display-list
+for (let s of out) {
+  const li = document.createElement("li")
+  li.textContent = s
+  ul.appendChild(li)
+}
 
 </script>
 </html>
