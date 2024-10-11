@@ -15,9 +15,9 @@ I pass it to an assemblyscript function (`test`) that will add `100` to `x`/`y` 
 
 ## memory management
 
-I expose `malloc`, `alloca`, and `free` from wasm, so it works the same in any wasm-language. Wasm-languages that do not have a way to manage their own memory will need some sort of adapter (maybe expose host functions?)
+I expose `malloc` and `free` from wasm, so it works the same in any wasm-language. Wasm-languages that do not have a way to manage their own memory will need some sort of adapter (maybe expose host functions?)
 
-In null0, the return-pointer of functions is always first param, if it returns a struct, so no memory-management needs to be exposed to host. These functions might still be useful wasm-side, to allocate return-values, though.
+In null0, the return-pointer of functions is always first param, if it returns a struct, so no memory-management needs to be exposed to host. These functions might still be useful wasm-side, to allocate return-values, though, and here they are used in tests.
 
 ### examples
 
@@ -29,9 +29,6 @@ export function malloc(size: usize, id: u32 = 0): usize {
   __pin(pout)
   return pout
 }
-
-// there might be a better way to do alloca, but currently it's just a copy of malloc
-export const alloca=malloc
 
 export function free(pointer:usize): void {
   __unpin(pointer)
@@ -46,11 +43,6 @@ In wasm made with C, it would look like this:
 NULL0_EXPORT("malloc")
 void* _null0_malloc(size_t size) {
   return malloc(size);
-}
-
-NULL0_EXPORT("alloca")
-void* _null0_alloca(size_t size) {
-  return __builtin_alloca(size);
 }
 
 NULL0_EXPORT("free")
