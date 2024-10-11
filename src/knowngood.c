@@ -1,5 +1,5 @@
 // known-good wasm that can pass a struct back & forth
-// uses wasi-sdk
+// uses wasi-sdk (for malloc/free)
 //  /opt/wasi-sdk/bin/clang src/knowngood.c -o build/knowngood.wasm
 
 #include <stdint.h>
