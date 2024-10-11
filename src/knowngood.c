@@ -7,6 +7,7 @@
 typedef uint16_t u16;
 
 #define NULL0_EXPORT(n) __attribute__((export_name(n)))
+#define NULL0_IMPORT(n) __attribute__((import_module("env"), import_name(n)))
 
 NULL0_EXPORT("malloc")
 void* _null0_malloc(size_t size) {
@@ -33,6 +34,16 @@ NULL0_EXPORT("test")
 void test(Vector* ret, Vector* p1) {
   ret->x = p1->x + 100;
   ret->y = p1->y + 100;
+}
+
+NULL0_IMPORT("test_callback")
+Vector test_callback(Vector vin);
+
+NULL0_EXPORT("test_callout")
+Vector test_callout() {
+  Vector vin = {.x=100, .y=100};
+  Vector v = test_callback(vin);
+  return v;
 }
 
 int main() {
