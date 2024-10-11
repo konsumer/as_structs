@@ -14,13 +14,14 @@ test('should work with struct input/output', () => {
 
   // Setup param (allocate 4 bytes for the Vector struct input)
   const pi = w.malloc(4)
+  const po = w.malloc(4)
 
   // Set the values for x and y at the correct byte offsets (pi and pi + 2)
   v.setUint16(pi, 100, true)
   v.setUint16(pi + 2, 200, true)
 
   // Call the test function
-  const po = w.test(pi)
+  w.test(po, pi)
 
   // Check that the input values were set correctly
   expect(v.getUint16(pi, true)).toBe(100)
