@@ -11,7 +11,7 @@
     "build:site": "vite build",
     "build:knowngood": "/opt/wasi-sdk/bin/clang src/knowngood.c -o build/knowngood.wasm",
     "start": "vite",
-    "pretest": "npm run build:knowngood && npm run build:debug",
+    "pretest": "npm run build:debug",
     "prestart": "npm run build:debug",
     "prebuild:site": "npm run build:debug"
   },
