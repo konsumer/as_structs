@@ -14,7 +14,9 @@ class Vector {
 }
 
 // test function that takes a struct-pointer param, and returns a pointer to a new one that is a copy, added to 100
-export function test(ret: Vector, vin:  Vector): void {
+export function test(retp: usize, vinp:  usize): void {
+  const ret = changetype<Vector>(retp);
+  const vin = changetype<Vector>(vinp);
   ret.x = vin.x + 100
   ret.y = vin.y + 100
 }
